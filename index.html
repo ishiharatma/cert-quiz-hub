@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cert-quiz-hub ｜ 資格試験 練習問題ハブ</title>
+<style>
+  :root {
+    --bg: #f4f6f8;
+    --card-bg: #ffffff;
+    --text: #1f2933;
+    --muted: #6b7280;
+    --accent: #3949ab;
+    --accent-dark: #283593;
+    --border: #e2e5e9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: 32px 16px;
+    text-align: center;
+    position: relative;
+  }
+  header h1 { margin: 0 0 8px; font-size: 1.6rem; }
+  header p { margin: 0; font-size: 0.9rem; opacity: 0.9; }
+  .header-nav {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .header-nav-link, .header-nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: rgba(255,255,255,0.85);
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: color 0.18s, background-color 0.18s;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+  .header-nav-link:hover, .header-nav-button:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.16);
+    text-decoration: none;
+  }
+  @media (max-width: 639px) {
+    .header-nav { position: static; justify-content: center; margin-top: 12px; }
+  }
+
+  /* ---- QR Code Modal ---- */
+  .qr-modal {
+    display: none;
+    position: fixed;
+    z-index: 1100;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .qr-modal.show { display: flex; }
+  .qr-modal-content {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem 2.5rem 1.75rem;
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  }
+  .qr-modal-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+  }
+  .qr-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--muted);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.18s;
+  }
+  .qr-modal-close:hover {
+    color: var(--accent-dark);
+    border-color: var(--accent-dark);
+  }
+  .qr-modal-image {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+  }
+  .qr-modal-hint {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 1rem;
+  }
+  .qr-modal-url {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent-dark);
+    word-break: break-all;
+  }
+
+  /* ---- Footer ---- */
+  .site-footer {
+    background: #232F3E;
+    color: #AAB7B8;
+    padding: 1.1rem 16px;
+  }
+  .footer-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .footer-links { display: flex; align-items: center; gap: 18px; }
+  .footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #AAB7B8;
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: color 0.18s;
+  }
+  .footer-link:hover { color: #fff; text-decoration: none; }
+  .footer-copyright { font-size: 0.75rem; color: #5d7278; margin: 0; }
+  .footer-sep { font-size: 0.75rem; color: #5d7278; }
+  @media (max-width: 639px) {
+    .footer-inner { flex-direction: column; gap: 6px; }
+    .footer-sep.desktop-only { display: none; }
+    .footer-copyright { font-size: 0.68rem; }
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 28px 16px 80px;
+  }
+  h2.section-title {
+    font-size: 1rem;
+    color: var(--muted);
+    border-left: 4px solid var(--accent);
+    padding-left: 10px;
+    margin: 32px 0 16px;
+  }
+  .exam-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .exam-card {
+    display: block;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: var(--text);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: box-shadow 0.15s, border-color 0.15s;
+  }
+  .exam-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  }
+  .exam-card .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: bold;
+    padding: 2px 10px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+  }
+  .exam-card.sakura .badge { background: #e7f1e0; color: #2e6e00; }
+  .exam-card h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .exam-card p { margin: 0; font-size: 0.85rem; color: var(--muted); }
+
+  .exam-card.placeholder {
+    background: #eceff1;
+    color: var(--muted);
+    border-style: dashed;
+    cursor: default;
+  }
+  .exam-card.placeholder:hover { box-shadow: none; border-color: var(--border); }
+  .exam-card.placeholder .badge { background: #dfe3e6; color: #6b7280; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="header-nav" aria-label="外部リンク">
+    <a href="https://github.com/ishiharatma/cert-quiz-hub" target="_blank" rel="noopener noreferrer" class="header-nav-link" aria-label="GitHubリポジトリ cert-quiz-hub">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub
+    </a>
+    <a href="https://ishiharatma.github.io/" target="_blank" rel="noopener noreferrer" class="header-nav-link" aria-label="Portfolio">
+      <img src="https://ishiharatma.github.io/favicon.ico" width="14" height="14" alt="" loading="lazy" style="border-radius:3px;opacity:0.85;">
+      Portfolio
+    </a>
+    <button type="button" id="qrCodeButton" class="header-nav-button" aria-label="このページをQRコードで共有" aria-haspopup="dialog">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2h4v4H2V2zm1 1v2h2V3H3zm-1 7h4v4H2v-4zm1 1v2h2v-2H3zm6-9h4v4H9V2zm1 1v2h2V3h-2zM9 9h1v1H9V9zm1 1h1v1h-1v-1zm-1 1h1v1H9v-1zm1 1h1v1h-1v-1zm1-3h1v1h-1V9zm1 1h1v1h-1v-1zm-1 1h1v1h-1v-1zm1 1h1v1h-1v-1zm1-3h1v1h-1V9zm0 3h1v1h-1v-1z"/></svg>
+      QRコード
+    </button>
+  </nav>
+  <h1>cert-quiz-hub</h1>
+  <p>資格試験ごとの学習ガイドと練習問題をまとめた学習リポジトリ</p>
+</header>
+
+<div id="qrCodeModal" class="qr-modal" role="dialog" aria-modal="true" aria-labelledby="qrCodeModalTitle">
+  <div class="qr-modal-content">
+    <button type="button" id="qrCodeModalClose" class="qr-modal-close" aria-label="閉じる">&times;</button>
+    <p id="qrCodeModalTitle" class="qr-modal-title">このページをQRコードで共有</p>
+    <img src="qr-code.svg" alt="このページのQRコード" class="qr-modal-image" width="200" height="200">
+    <p class="qr-modal-hint">スマートフォンのカメラで読み取ってください</p>
+    <p class="qr-modal-url">ishiharatma.github.io/cert-quiz-hub</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <h2 class="section-title">試験を選ぶ</h2>
+  <div class="exam-grid">
+
+    <a class="exam-card sakura" href="exams/sacloud-ai-certification/index.html">
+      <span class="badge">さくらインターネット</span>
+      <h3>さくらのAI検定</h3>
+      <p>学習ガイドと100問の想定問題集で対策できます。</p>
+    </a>
+
+    <!-- 今後追加予定の試験（例）。フォルダを追加したらこのプレースホルダーをリンクに差し替える -->
+    <div class="exam-card placeholder">
+      <span class="badge">準備中</span>
+      <h3>AWS Certified Solutions Architect - Associate</h3>
+      <p>今後追加予定です。</p>
+    </div>
+
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p class="footer-copyright">&copy; 2026 TOMOAKI ishihara. cert-quiz-hub ｜ 学習用・非公式の資料です。必ず各試験の公式情報もご確認ください。</p>
+    <span class="footer-sep desktop-only">|</span>
+    <div class="footer-links">
+      <a href="https://github.com/ishiharatma/cert-quiz-hub" target="_blank" rel="noopener noreferrer" class="footer-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <span class="footer-sep">|</span>
+      <a href="https://ishiharatma.github.io/" target="_blank" rel="noopener noreferrer" class="footer-link">
+        <img src="https://ishiharatma.github.io/favicon.ico" width="14" height="14" alt="" loading="lazy" style="border-radius:2px;opacity:0.85;">
+        Portfolio
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var qrModal = document.getElementById('qrCodeModal');
+  var qrButton = document.getElementById('qrCodeButton');
+  var qrModalClose = document.getElementById('qrCodeModalClose');
+
+  qrButton.addEventListener('click', function () { qrModal.classList.add('show'); });
+  qrModalClose.addEventListener('click', function () { qrModal.classList.remove('show'); });
+  qrModal.addEventListener('click', function (event) {
+    if (event.target === qrModal) qrModal.classList.remove('show');
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && qrModal.classList.contains('show')) {
+      qrModal.classList.remove('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+title: cert-quiz-hub
+description: 資格試験ごとの学習ガイド（Markdown）と練習問題（クイズアプリ）をまとめた学習リポジトリ
+theme: jekyll-theme-cayman
+markdown: kramdown
+
+# トップページや exams/*/index.html は front matter を持たない
+# 素のHTMLとして配信されるため、Jekyll のレイアウト処理の対象外。
+exclude:
+  - README.md
