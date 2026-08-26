@@ -3,6 +3,10 @@ layout: default
 title: さくらのAI検定 学習ガイド
 ---
 
+<div style="margin-bottom:1.5rem;">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:4px;font-size:0.9rem;color:#586069;text-decoration:none;" onmouseover="this.style.color='#2e6e00'" onmouseout="this.style.color='#586069'">← 試験トップに戻る</a>
+</div>
+
 # さくらのAI検定 学習ガイド
 
 > 本ドキュメントは「さくらのAI検定 シラバスv1.0」および公式オンライン学習教材（1.1〜2.1）、さくらのクラウド／さくらのAIサービス公式サイト（manual.sakura.ad.jp、ai.sakura.ad.jp 等）の内容をもとに、学習用にまとめたものです。記載の誤りが含まれる可能性があるため、最新・正確な情報は必ず公式サイト・公式教材をご確認ください。
@@ -1097,3 +1101,15 @@ LoRA（1.6節参照：低ランク行列による差分学習）は、モデル�
 - VM型GPUクラウドサービス 高火力VRT サービスサイト：https://cloud.sakura.ad.jp/lp/vrt/
 - コンテナ型GPUクラウドサービス 高火力DOK サービスサイト：https://ai.sakura.ad.jp/gpu/koukaryoku-dok/
 - さくらのクラウド マニュアル：https://manual.sakura.ad.jp/cloud/index.html
+
+<button id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="ページトップに戻る" title="ページトップに戻る" style="position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:#3b8d00;color:#fff;border:none;cursor:pointer;font-size:1.1rem;line-height:1;opacity:0;visibility:hidden;transition:opacity 0.25s,visibility 0.25s;z-index:900;box-shadow:0 2px 8px rgba(0,0,0,0.2);">↑</button>
+
+<script>
+(function(){
+  var btn = document.getElementById('scroll-top-btn');
+  window.addEventListener('scroll', function(){
+    if (window.scrollY > 300) { btn.style.opacity = '1'; btn.style.visibility = 'visible'; }
+    else { btn.style.opacity = '0'; btn.style.visibility = 'hidden'; }
+  }, { passive: true });
+})();
+</script>
