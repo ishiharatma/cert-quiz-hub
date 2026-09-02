@@ -3,6 +3,8 @@
 資格試験ごとの学習ガイド（Markdown）と練習問題（クイズアプリ）をまとめた学習リポジトリです。
 GitHub Pages で配信し、試験ごとにフォルダを分けて資料・練習問題へ遷移できるようにしています。
 
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen)](https://ishiharatma.github.io/cert-quiz-hub/)
+
 ## 構成
 
 ```text
