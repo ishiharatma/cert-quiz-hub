@@ -1,0 +1,10 @@
+{
+  "maxDisplay": 5,
+  "expiryDays": 30,
+  "notices": [
+    {
+      "date": "yyyy/mm/dd",
+      "content": "お知らせ内容をここに記入します。"
+    }
+  ]
+}
