@@ -32,6 +32,10 @@ cert-quiz-hub/
 | `/generate-questions` | 問題を生成してレビューまで通す |
 | `/review-questions` | 既存問題を品質レビューする |
 
+スキル本体は `.claude/skills/<コマンド名>/SKILL.md` に置くこと。
+**`.claude/skills/<name>.md` のようなフラットファイルは Claude Code に認識されない**
+（ディレクトリ＋`SKILL.md` が必須）。新しいスキルを追加する際は必ずこの構成に従う。
+
 ## 新試験を追加するときの流れ
 
 1. `/create-exam` を実行 → フォルダ・ファイルを自動生成
