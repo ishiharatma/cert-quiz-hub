@@ -1498,5 +1498,65 @@
     "explanation": "LoRA実践の流れは、①画像＋キャプションのペアをtar.gz形式でパッケージング、②learningコマンドを指定したタスクとして高火力DOK上で学習を実行、③学習済みのLoRAファイルを画像生成時に適用する、という順序である。",
     "major_category": "AI実践",
     "category": "3.2 高火力DOK実践"
+  },
+  {
+    "question_number": 101,
+    "question": "さくらのAI EngineでRAG用ドキュメントをUIから登録する際に設定できる項目の組み合わせとして、最も適切なものを一つ選べ。",
+    "choices": [
+      "名前、ファイル、タグ、埋め込みモデル、距離計算方式の5項目が設定できる",
+      "名前、ファイル、しきい値、埋め込みモデル、チャンクサイズの5項目が設定できる",
+      "名前、ファイル、タグ、埋め込みモデル、チャンクサイズの5項目が設定できる",
+      "名前、ファイル、タグ、チャンク数上限、チャンクサイズの5項目が設定できる"
+    ],
+    "correct_answer": "名前、ファイル、タグ、埋め込みモデル、チャンクサイズの5項目が設定できる",
+    "correct_answer_index": 2,
+    "explanation": "UI登録時の設定項目は、名前・ファイル・タグ・埋め込みモデル・チャンクサイズの5つである。距離計算方式は2026年2月のアップデートで追加された別のパラメータであり、しきい値（threshold）はPlaygroundのRAG検索設定で使われる用語であるため、いずれも本来の登録項目とは異なる。チャンク数上限という項目も存在しない。",
+    "major_category": "AI実践",
+    "category": "3.1 さくらのAI Engine実践"
+  },
+  {
+    "question_number": 102,
+    "question": "2026年2月に行われた、さくらのAI EngineのRAG機能に関するアップデート内容として、最も適切なものを一つ選べ。",
+    "choices": [
+      "距離計算方式にコサイン類似度が追加され、チャンクサイズの自動調整機能が搭載され、埋め込みモデルの再学習機能も追加された",
+      "音声文字起こしにwhisper-large-v3-turboが追加され、Text-to-Speechの無料枠が拡大され、Chat completionsの月間上限も増加した",
+      "埋め込みモデルにOpenAI互換モデルが追加され、チャンクサイズの上限が撤廃され、距離計算方式はコサイン類似度に統一された",
+      "チャンクサイズ指定パラメータが追加され、距離計算方式にユークリッド距離が選択可能になり、埋め込みモデル『Qwen3-Embedding-4B-FP16』が追加された"
+    ],
+    "correct_answer": "チャンクサイズ指定パラメータが追加され、距離計算方式にユークリッド距離が選択可能になり、埋め込みモデル『Qwen3-Embedding-4B-FP16』が追加された",
+    "correct_answer_index": 3,
+    "explanation": "2026年2月のアップデートでは、チャンクサイズ指定パラメータの追加、距離計算方式へのユークリッド距離の追加、埋め込みモデル『Qwen3-Embedding-4B-FP16』の追加が行われた。他の選択肢は、音声関連機能の追加やチャンクサイズ機能の廃止・自動化など、study-guideに記載のない内容を含んでおり誤りである。",
+    "major_category": "AI実践",
+    "category": "3.1 さくらのAI Engine実践"
+  },
+  {
+    "question_number": 103,
+    "question": "さくらのAI Engineの従量課金プランにおけるEmbeddingsの料金体系として、最も適切なものを一つ選べ。",
+    "choices": [
+      "Input側もOutput側も1万トークンあたり2円が均等に課金される",
+      "Input側は無料であり、Output側のみ1万トークンあたり2円が課金される",
+      "Input側は1万トークンあたり2円が課金され、Output側は課金されない",
+      "Input側は1万トークンあたり0.15円、Output側は1万トークンあたり0.75円が課金される"
+    ],
+    "correct_answer": "Input側は1万トークンあたり2円が課金され、Output側は課金されない",
+    "correct_answer_index": 2,
+    "explanation": "Embeddingsの従量課金は、Input側が1万トークンあたり2円、Output側は無料と定められている。選択肢Dの数値（Input 0.15円、Output 0.75円）はChat completionsの料金体系であり、Embeddingsのものではない。AやBはInput/Outputの課金有無の関係を誤って説明している。",
+    "major_category": "さくらインターネットのAIサービス",
+    "category": "2.4 さくらのAI Engine"
+  },
+  {
+    "question_number": 104,
+    "question": "さくらのAI Engineにおける、Audio transcriptionとText-to-Speechの料金体系の説明として、最も適切なものを一つ選べ。",
+    "choices": [
+      "Audio transcriptionは1万トークンあたり0.5円、Text-to-Speechは1万トークンあたり3円が課金され、無料枠はいずれも月10,000リクエストである",
+      "Audio transcriptionもText-to-Speechも無償プランは提供されておらず、利用開始時点から60秒あたり0.5円の従量課金が発生する",
+      "Audio transcriptionは月50リクエストまで無料で従量課金は1万モーラあたり0.5円、Text-to-Speechは月3,000リクエストまで無料で従量課金は60秒あたり3円である",
+      "Audio transcriptionは月50リクエストまで無料で従量課金は60秒あたり0.5円、Text-to-Speechも月50リクエストまで無料で従量課金は1万モーラあたり3円である"
+    ],
+    "correct_answer": "Audio transcriptionは月50リクエストまで無料で従量課金は60秒あたり0.5円、Text-to-Speechも月50リクエストまで無料で従量課金は1万モーラあたり3円である",
+    "correct_answer_index": 3,
+    "explanation": "Audio transcriptionは月50リクエストまで無料で従量課金0.5円/60秒、Text-to-Speechも月50リクエストまで無料で従量課金3円/1万モーラである。選択肢Cは無料枠の上限と課金単位を両サービス間で取り違えており、Aはトークン単位課金という誤った基準を用いている。Bは両サービスとも無償プランが存在するため誤りである。",
+    "major_category": "さくらインターネットのAIサービス",
+    "category": "2.4 さくらのAI Engine"
   }
 ]
